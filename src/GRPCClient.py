@@ -11,14 +11,17 @@ import asyncio
 
 class AuthServCaller:
     def __init__(self) -> None:
-        self.channel_data = '0.0.0.0:8091'
+        self.channel_data = 'localhost:8091'
         base_dir = Path(__file__).parent.parent.resolve()
         cur_path = base_dir.joinpath('configs', 'config.json')
         with open(cur_path) as json_config:
             path_to_cred_json = json.load(json_config)
         path_to_cred = path_to_cred_json['PathToCreds']
+        #key = path_to_cred_json['Key']
         print("config parsed")
-        self.credential = grpc.ssl_channel_credentials(open(path_to_cred, 'rb').read())
+        pem_cert = open(path_to_cred, 'rb').read()
+        #key_cert = open(key, 'rb').read()
+        self.credential = grpc.ssl_channel_credentials(root_certificates=pem_cert)
         print("creds getted")
 
     def GetSecureChannel(self):
