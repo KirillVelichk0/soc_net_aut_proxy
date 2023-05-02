@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>METANIT.COM</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="message"></div>
+     <p>
+        Введите логин: <br /> 
+        <input name="login" id="login" />
+    </p>
+     <p>
+        Введите пароль: <br /> 
+        <input name="password" id="password" />
+    </p>
+     <p>
+        Введите подтверждение: <br /> 
+        <input name="vefif" id="verif"/>
+    </p>
+    <button onclick="try_reg()">Регистрация</button>
+    <button onclick="send_name()">Отправить_название</button>
+<script>
+        async function try_reg(){
+     
+            // получаем введеные в поля имя и возраст
+            const name = document.getElementById("login").value;
+            password = document.getElementById("password").value;
+
+            // отправляем запрос
+            const response = await fetch("/registration", {
+                    method: "POST",
+                    headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        email: name,
+                        password: password
+                    })
+                });
+                const status= await response.status;
+                if(status == 204){
+                    document.getElementById("message").textContent = "Not found"
+                }
+                else{
+                    const data = await response.json()
+                    if (response.ok) { 
+                        document.getElementById("message").textContent = data.result;
+                    }
+                    else
+                    {
+                        document.getElementById("message").textContent = data.result;
+                    }
+                }
+                
+        }
+</script>
+<script>
+    async function send(){
+ 
+        // получаем введеные в поля имя и возраст
+        const jwt = document.getElementById("jwt").value;
+        before = document.getElementById("before").value;
+ 	if (before == -1)
+ 	{
+ 		before = null
+ 	}
+        // отправляем запрос
+        const response = await fetch("/user_publics", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    jwt: jwt,
+                    before: before,
+                    limit:20
+                })
+            });
+            const status= await response.status;
+                if(status == 204){
+                    document.getElementById("message").textContent = "Not found"
+                }
+                else{
+                    const data = await response.json()
+                    if (response.ok) { 
+                        document.getElementById("message").textContent = data.message;
+                    }
+                    else
+                    {
+                        document.getElementById("message").textContent = data.error;
+                    }
+                }
+    }
+</script>
+</body>
+</html>
