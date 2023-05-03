@@ -19,6 +19,7 @@
         <input name="verif" id="verif"/>
     </p>
     <button onclick="try_reg()">Регистрация</button>
+    <button onclick="try_log()">Вход</button>
     <button onclick="send()">Отправить_название</button>
 <script>
         async function try_reg(){
@@ -52,6 +53,39 @@
                 }
                 
         }
+</script>
+<script>
+    async function try_log(){
+ 
+        // получаем введеные в поля имя и возраст
+        const name = document.getElementById("login").value;
+        password = document.getElementById("password").value;
+
+        // отправляем запрос
+        const response = await fetch("/login", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    email: name,
+                    password: password
+                })
+            });
+            const status= await response.status;
+            if(status == 204){
+                document.getElementById("message").textContent = "Not found"
+            }
+            else{
+                const data = await response.json()
+                if (response.ok) { 
+                    document.getElementById("message").textContent = data.jwtToken + " " + data.user_id;
+                }
+                else
+                {
+                    document.getElementById("message").textContent = data.error;
+                }
+            }
+            
+    }
 </script>
 <script>
     async function send(){

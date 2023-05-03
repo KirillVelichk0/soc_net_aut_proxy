@@ -26,5 +26,15 @@ async def TryVerifyReg(request: VerifyModel):
         return JSONResponse({"response_message": result})
     except Exception as ex:
         return JSONResponse({"error": str(ex)}, status_code=401)
+    
+
+@app.post("/login", response_class=JSONResponse)
+async def TryLogin(request: RegistrateOrLoginModel):
+    try:
+        print("Im here")
+        result = await client.LoginWithPassword(request.email, request.password)
+        return JSONResponse({"jwtToken": result[0], "user_id": result[1]})
+    except Exception as ex:
+        return JSONResponse({"error": str(ex)}, status_code=401)
 
         

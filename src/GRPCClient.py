@@ -55,7 +55,7 @@ class AuthServCaller:
             stub = AuthServ_ipb2_grpc.AuthAndRegistServiceStub(async_channel)
             input_data = AuthServ_ipb2.PasswordAuthInput(email=email, password=password)
             result = await stub.AuthFromPassword(input_data)
-            return result
+            return (result.jwtToken, result.user_id)
         
 
 grpc_client = AuthServCaller()
