@@ -17,3 +17,14 @@ async def TryRegistrate(request: RegistrateOrLoginModel):
         return JSONResponse({"result": result[0], "isOk": result[1]})
     except Exception as ex:
         return JSONResponse({"error": str(ex)}, status_code=401)
+    
+
+@app.post('/registration_verification', response_class=JSONResponse)
+async def TryVerifyReg(request: VerifyModel):
+    try:
+        result = await client.TryVerifyRegistr(request.random_data_token)
+        return JSONResponse({"response_message": result})
+    except Exception as ex:
+        return JSONResponse({"error": str(ex)}, status_code=401)
+
+        

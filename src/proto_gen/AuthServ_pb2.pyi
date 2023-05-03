@@ -27,12 +27,12 @@ class PasswordAuthInput(_message.Message):
     def __init__(self, email: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class PasswordAuthResult(_message.Message):
-    __slots__ = ["jwtToken", "responceMessage"]
+    __slots__ = ["jwtToken", "user_id"]
     JWTTOKEN_FIELD_NUMBER: _ClassVar[int]
-    RESPONCEMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
     jwtToken: str
-    responceMessage: str
-    def __init__(self, jwtToken: _Optional[str] = ..., responceMessage: _Optional[str] = ...) -> None: ...
+    user_id: int
+    def __init__(self, jwtToken: _Optional[str] = ..., user_id: _Optional[int] = ...) -> None: ...
 
 class RegistrationInput(_message.Message):
     __slots__ = ["email", "password"]
@@ -57,9 +57,7 @@ class RegistrationVerificationInput(_message.Message):
     def __init__(self, randomDataToken: _Optional[str] = ...) -> None: ...
 
 class RegistrationVerificationResult(_message.Message):
-    __slots__ = ["isOk", "token"]
-    ISOK_FIELD_NUMBER: _ClassVar[int]
-    TOKEN_FIELD_NUMBER: _ClassVar[int]
-    isOk: bool
-    token: str
-    def __init__(self, token: _Optional[str] = ..., isOk: bool = ...) -> None: ...
+    __slots__ = ["response_message"]
+    RESPONSE_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    response_message: str
+    def __init__(self, response_message: _Optional[str] = ...) -> None: ...

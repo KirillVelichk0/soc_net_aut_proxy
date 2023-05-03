@@ -7,6 +7,6 @@ class RegistrateOrLoginModel(BaseModel):
     password: str
 
 class VerifyModel(BaseModel):
-    random_data_roken: str
+    random_data_token: str
 
     

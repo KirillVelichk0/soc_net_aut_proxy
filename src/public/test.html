@@ -16,10 +16,10 @@
     </p>
      <p>
         Введите подтверждение: <br /> 
-        <input name="vefif" id="verif"/>
+        <input name="verif" id="verif"/>
     </p>
     <button onclick="try_reg()">Регистрация</button>
-    <button onclick="send_name()">Отправить_название</button>
+    <button onclick="send()">Отправить_название</button>
 <script>
         async function try_reg(){
      
@@ -47,7 +47,7 @@
                     }
                     else
                     {
-                        document.getElementById("message").textContent = data.result;
+                        document.getElementById("message").textContent = data.error;
                     }
                 }
                 
@@ -57,20 +57,13 @@
     async function send(){
  
         // получаем введеные в поля имя и возраст
-        const jwt = document.getElementById("jwt").value;
-        before = document.getElementById("before").value;
- 	if (before == -1)
- 	{
- 		before = null
- 	}
+        const verif = document.getElementById("verif").value;
         // отправляем запрос
-        const response = await fetch("/user_publics", {
+        const response = await fetch("/registration_verification", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    jwt: jwt,
-                    before: before,
-                    limit:20
+                    random_data_token: verif
                 })
             });
             const status= await response.status;
@@ -80,7 +73,7 @@
                 else{
                     const data = await response.json()
                     if (response.ok) { 
-                        document.getElementById("message").textContent = data.message;
+                        document.getElementById("message").textContent = data.response_message;
                     }
                     else
                     {

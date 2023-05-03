@@ -48,7 +48,7 @@ class AuthServCaller:
             stub = AuthServ_ipb2_grpc.AuthAndRegistServiceStub(async_channel)
             input_data = AuthServ_ipb2.RegistrationVerificationInput(randomDataToken=rand_token)
             result = await stub.TryVerifRegistr(input_data)
-            return result
+            return result.response_message
         
     async def LoginWithPassword(self, email: str, password: str):
         async with self.GetSecureChannel() as async_channel:
