@@ -21,6 +21,38 @@
     <button onclick="try_reg()">Регистрация</button>
     <button onclick="try_log()">Вход</button>
     <button onclick="send()">Отправить_название</button>
+    <button onclick="try_log_jwt()">JWT</button>
+    <script>
+        async function try_log_jwt(){
+     
+            // получаем введеные в поля имя и возраст
+            const jwt = document.getElementById("verif").value;
+
+            // отправляем запрос
+            const response = await fetch("/loginJWT", {
+                    method: "POST",
+                    headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        jwt: jwt
+                    })
+                });
+                const status= await response.status;
+                if(status == 204){
+                    document.getElementById("message").textContent = "Not found"
+                }
+                else{
+                    const data = await response.json()
+                    if (response.ok) { 
+                        document.getElementById("message").textContent = data.jwtToken + " " + data.user_id;
+                    }
+                    else
+                    {
+                        document.getElementById("message").textContent = data.error;
+                    }
+                }
+                
+        }
+</script>
 <script>
         async function try_reg(){
      

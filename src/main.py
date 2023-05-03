@@ -1,6 +1,6 @@
 from fastapi.responses import JSONResponse, FileResponse, Response
 from application import app
-from GroupsMaster import RegistrateOrLoginModel, VerifyModel
+from GroupsMaster import RegistrateOrLoginModel, VerifyModel, JWT_Model
 from GRPCClient import grpc_client
 client = grpc_client
 main_app = app
@@ -36,5 +36,13 @@ async def TryLogin(request: RegistrateOrLoginModel):
         return JSONResponse({"jwtToken": result[0], "user_id": result[1]})
     except Exception as ex:
         return JSONResponse({"error": str(ex)}, status_code=401)
+    
+@app.post('/loginJWT', response_class=JSONResponse)
+async def TryLoginWithJWT(request: JWT_Model):
+    try:
+        result = await client.LoginWithJWT(request.jwt)
+        return JSONResponse({"jwtToken": result[1], 'user_id': result[0]})
+    except Exception as ex:
+        return JSONResponse({'error': str(ex)}, status_code=401)
 
         

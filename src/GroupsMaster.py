@@ -9,4 +9,6 @@ class RegistrateOrLoginModel(BaseModel):
 class VerifyModel(BaseModel):
     random_data_token: str
 
+class JWT_Model(BaseModel):
+    jwt: str
     

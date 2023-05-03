@@ -57,6 +57,13 @@ class AuthServCaller:
             result = await stub.AuthFromPassword(input_data)
             return (result.jwtToken, result.user_id)
         
+    async def LoginWithJWT(self, jwt:str):
+        async with self.GetSecureChannel() as async_channel:
+            stub = AuthServ_ipb2_grpc.AuthAndRegistServiceStub(async_channel)
+            input_data = AuthServ_ipb2.AuthInput(jwtToken=jwt)
+            result = await stub.Authenticate(input_data)
+            return (result.userId, result.nextToken)
+        
 
 grpc_client = AuthServCaller()
         
