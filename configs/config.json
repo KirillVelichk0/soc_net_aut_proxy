@@ -1,4 +1,6 @@
 {
     "PathToCreds": "/home/houdini/ssl_nginx/soc_net_aut_proxy.crt",
-    "Key": "/home/houdini/ssl_nginx/soc_net_aut_proxy.key"
+    "Key": "/home/houdini/ssl_nginx/soc_net_aut_proxy.key",
+    "PEM_crt": "/home/houdini/ssl_nginx/soc_net_aut_proxy.pem",
+    "PEM_key": "/home/houdini/ssl_nginx/soc_net_aut_proxy_key.pem"
 }
